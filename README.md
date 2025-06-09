@@ -21,6 +21,7 @@ First, download all software and example files using:
 git clone https://github.com/staylorhead/CADET.git
 ```
 
+### Dependencies
 CADET depends opon successful prior installation of:
 - [R](https://www.r-project.org/) and the following packages
     - [lassosum](https://github.com/tshmak/lassosum)
