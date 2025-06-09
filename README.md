@@ -6,18 +6,16 @@
   <img src="images/workflow.png" alt="Figure description" width="600"/>
 </p>
 
-CADET is a tool that enables powerful transcriptome-wide association study (TWAS) of admixed cohorts leveraging the local-ancestry (LA) information of the cohort along with summary-level eQTL data from reference panels of different ancestral groups. CADET combines multiple polygenic risk score models with the summary-level eQTL reference data to predict LA-aware genetically-regulated gene expression (GReX) in target admixed samples. This gene expression can then be used in TWAS to test for gene-level association with a given phenotype. This software circumvents the need for indiviudal-level genotype and gene expression data and leverage local ancestry information to allow for LA-dependent genetic architecture of gene expression.
+CADET is a tool for conducting powerful transcriptome-wide association studies (TWAS) in admixed populations by integrating local ancestry (LA) information and summary-level eQTL data from ancestrally diverse reference panels. CADET predicts local ancestry-aware genetically regulated gene expression (GReX) by combining polygenic risk score (PRS) models with eQTL summary statistics, without requiring individual-level genotype or expression data. This enables downstream TWAS to identify gene-phenotype associations while accounting for possible ancestry-specific genetic regulation.
 
-There are primary steps performed in CADET:
-1. Training PRS models of gene expression using eQTL summary statistics using
-    - Pruning + thresholding (P+T), or
+CADET leverages local ancestry to capture ancestry-dependent architecture of gene expression, improving the relevance and accuracy of TWAS in admixed populations. With this software, you can perform the following core steps:
+1.	Train PRS models of gene expression using eQTL summary statistics via:
+    - Pruning and thresholding (P+T), or
     - Lassosum
-2. Imputing LA-aware and LA-unaware vectors of gene expression in target admixed subjects
-3. Testing for TWAS association with trait of interest
+2.	Impute GReX (both LA-aware and LA-unaware) for target admixed individuals
+3.	Test gene-phenotype associations via TWAS using the imputed GReX
 
-For questions or issues related to this software, please contact Taylor Head (<sthead@mdanderson.org>).
-
-If you use CADET, please cite the following article:
+If you use CADET in your research, please cite the following article:
 
 > Head, S. T., Dai, Q., Schildkraut, J., Cutler, D. J., Yang, J., & Epstein, M. P. (2024). *CADET: Enhanced transcriptome-wide association analyses in admixed samples using eQTL summary data.* bioRxiv. https://doi.org/10.1101/2024.10.21.619441
 
