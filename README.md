@@ -2,11 +2,11 @@
 
 ## Introduction
 
-CADET is a tool that enables powerful transcriptome-wide association study (TWAS) of admixed cohorts leveraging the local-ancestry (LA) information of the cohort along with summary-level eQTL data from reference panels of different ancestral groups. CADET combines multiple polygenic risk score models with the summary-level eQTL reference data to predict LA-aware genetically-regulated gene expression (GReX) in target admixed samples. This gene expression can then be used in TWAS to test for gene-level association with a given phenotype. This software circumvents the need for indiviudal-level genotype and gene expression data and leverage local ancestry information to allow for LA-dependent genetic architecture of gene expression.
-
 <p align="center">
   <img src="images/workflow.png" alt="Figure description" width="600"/>
 </p>
+
+CADET is a tool that enables powerful transcriptome-wide association study (TWAS) of admixed cohorts leveraging the local-ancestry (LA) information of the cohort along with summary-level eQTL data from reference panels of different ancestral groups. CADET combines multiple polygenic risk score models with the summary-level eQTL reference data to predict LA-aware genetically-regulated gene expression (GReX) in target admixed samples. This gene expression can then be used in TWAS to test for gene-level association with a given phenotype. This software circumvents the need for indiviudal-level genotype and gene expression data and leverage local ancestry information to allow for LA-dependent genetic architecture of gene expression.
 
 There are primary steps performed in CADET:
 1. Training PRS models of gene expression using eQTL summary statistics using
