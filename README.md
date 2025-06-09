@@ -22,7 +22,7 @@ git clone https://github.com/staylorhead/CADET.git
 ```
 
 CADET depends opon successful prior installation of:
-- [R] (https://www.r-project.org/) and the following packages
+- [R](https://www.r-project.org/) and the following packages
     - [lassosum](https://github.com/tshmak/lassosum)
     - [fdrtool](https://cran.r-project.org/web/packages/fdrtool/index.html)
 - [BGZIP](http://www.htslib.org/doc/bgzip.html)
