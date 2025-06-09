@@ -17,6 +17,10 @@ There are primary steps performed in CADET:
 
 For questions or issues related to this software, please contact Taylor Head (<sthead@mdanderson.org>).
 
+If you use CADET, please cite the following article:
+
+> Head, S. T., Dai, Q., Schildkraut, J., Cutler, D. J., Yang, J., & Epstein, M. P. (2024). *CADET: Enhanced transcriptome-wide association analyses in admixed samples using eQTL summary data.* bioRxiv. https://doi.org/10.1101/2024.10.21.619441
+
 ## Installation 
 
 First, download all software and example files using:
