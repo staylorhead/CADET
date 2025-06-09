@@ -24,6 +24,24 @@ CADET also depends opon installation of
     - [numpy 1.21.5](https://numpy.org)
     - [pysam 0.19.1](https://pysam.readthedocs.io/en/latest/api.html) 
 
+Here is some example code to create an Pythong environment for CADET:
+
+```bash
+# create environment 
+conda create --name cadet python=3.9 pandas=1.4.4 numpy=1.21.5 scipy=1.7.3 pip
+# deactivate conda environment
+conda deactivate
+
+ # activate the environment
+conda activate cadet
+
+# install pysam
+pip install pysam
+
+# deactivate the environment
+conda deactivate
+```
+
 ### Input Files
 
 ### Example Code
