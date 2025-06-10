@@ -65,7 +65,7 @@ conda deactivate
 
 ```bash
 # set the location of the CADET source files
-DIR="/home/sfisch3/CADET"
+DIR="/home/user/CADET"
 
 # train eQTL weights in one ancestry, e.g., AFR
 python3 ${DIR}/training.py \
