@@ -62,3 +62,38 @@ conda deactivate
 ### Input Files
 
 ### Example Code
+
+```bash
+# set the location of the CADET source files
+DIR="/home/sfisch3/CADET"
+
+# train eQTL weights in one ancestry, e.g., AFR
+python3 ${DIR}/training.py \
+--anno_file=${DIR}/Example/Exp_anno.txt \
+--geno_dir=${DIR}/Example/Exp_geno \
+--out_dir=${DIR}/Output/Anc1_grex_models \
+--sst_file=${DIR}/Example/Exp_eQTLSumStatsAnc1.txt \
+--lassosum_LD_block="AFR.hg38" \
+--r2=0.99 \
+--window=1000000 \
+--models=PT,lassosum \
+--pt=0.001,0.05 \
+--thread=1 \
+--script_dir=${DIR} \
+--seed=123
+
+# train eQTL weights in a second ancestry, e.g., EUR
+python3 ${DIR}/training.py \
+--anno_file=${DIR}/Example/Exp_anno.txt \
+--geno_dir=${DIR}/Example/Exp_geno \
+--out_dir=${DIR}/Output/Anc2_grex_models \
+--sst_file=${DIR}/Example/Exp_eQTLSumStatsAnc2.txt \
+--lassosum_LD_block="EUR.hg38" \
+--r2=0.99 \
+--window=1000000 \
+--models=PT,lassosum \
+--pt=0.001,0.05 \
+--thread=1 \
+--script_dir=${DIR} \
+--seed=123
+```
