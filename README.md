@@ -64,6 +64,11 @@ conda deactivate
 ### Example Code
 
 ```bash
+module load R
+module load tabix
+module load plink # v1.9
+conda activate cadet
+
 # set the location of the CADET source files
 DIR="/home/user/CADET"
 
