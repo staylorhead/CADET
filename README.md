@@ -100,10 +100,10 @@ module load tabix
 module load plink # v1.9
 conda activate cadet
 
-# set the location of the CADET source directory
+# Set the location of the CADET source directory
 DIR="/home/sfisch3/CADET"
 
-# set the location of user input files
+# Set the location of user input files
 VCF="/home/sfisch3/CADET/Example/flare_geno_anc.vcf"
 PHENO="/home/sfisch3/CADET/Example/twas_phenotypes.txt"
 ANNO="/home/sfisch3/CADET/Example/anno.txt"
@@ -112,7 +112,7 @@ EQTL_SS_ANC1="${DIR}/Example/eQTLSumStatsAnc1.txt"
 MAF_ANC0=${DIR}/Example/mafAnc0.txt
 MAF_ANC1=${DIR}/Example/mafAnc1.txt
 
-# first create binary files of target vcf
+# First create binary files of target VCF
 plink \
   --vcf ${VCF} \
   --double-id \
@@ -120,22 +120,27 @@ plink \
   --keep-allele-order \
   --out ${DIR}/Example/geno
 
-# train eQTL weights in ancestry 0, e.g., AFR
+################################################################
+# (1) Train eQTL weights in ancestry 0, e.g., AFR
+################################################################
 python3 ${DIR}/training.py \
---anno_file=${ANNO} \
---geno_dir=${DIR}/Example/geno \
---out_dir=${DIR}/Example/Output/Anc0_grex_models \
---sst_file=${EQTL_SS_ANC0} \
---lassosum_LD_block="AFR.hg38" \
---r2=0.99 \
---window=1000000 \
---models=PT,lassosum \
---pt=0.001,0.05 \
---thread=1 \
---script_dir=${DIR} \
---seed=123
+--anno_file=${ANNO} \ # Path to gene annotation file
+--geno_dir=${DIR}/Example/geno \ # Path to binary files created above in plink call
+--out_dir=${DIR}/Example/Output/Anc0_grex_models \ # Path to output directory
+--sst_file=${EQTL_SS_ANC0} \ # eQTL summary statistic file of ancestry 0
+--lassosum_LD_block="AFR.hg38" \ # lassosum LD block: one of "EUR.hg19", "AFR.hg19", "ASN.hg19", "EUR.hg38", "AFR.hg38", "ASN.hg38"
+--r2=0.99 \ # LD-clumping threshold 
+--window=1000000 \ # Window size around gene
+--models=PT,lassosum \ # PRS models to train for impute gene expression
+--pt=0.001,0.05 \ # P-value threshold if training P+T clumping and thresholding models
+--thread=1 \ # Number of threads
+--script_dir=${DIR} \ # Path to CADET source directory
+--seed=123 # Seed
 
-# train eQTL weights in ancestry 1, e.g., EUR
+################################################################
+# (2) Train eQTL weights in ancestry 1, e.g., EUR
+################################################################
+
 python3 ${DIR}/training.py \
 --anno_file=${ANNO} \
 --geno_dir=${DIR}/Example/geno \
@@ -150,8 +155,11 @@ python3 ${DIR}/training.py \
 --script_dir=${DIR} \
 --seed=123
 
-# impute GReX for genes on a single chromosome
-# can loop over all 22 autosomes
+################################################################
+# (3) Impute GReX for genes on a single chromosome
+# This can fed into a loop over all 22 autosomes
+################################################################
+
 Rscript ${DIR}/imputing.R \
 --chrom=4 \
 --anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \
@@ -164,8 +172,11 @@ Rscript ${DIR}/imputing.R \
 --maf_anc1=${MAF_ANC1} \
 --out_dir=${DIR}/Example/Output/Imputed_grex
 
-# perform TWAS
-# can loop over all 22 autosomes and all phenotypes, e.g.:
+################################################################
+# (4) Perform TWAS and p-value aggregation
+# This can loop over all 22 autosomes and all phenotypes
+################################################################
+
 for pheno_num in 1 2; do
   Rscript ${DIR}/twas.R \
     --chrom=4 \
