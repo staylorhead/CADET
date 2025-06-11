@@ -61,9 +61,25 @@ pip install pysam
 conda deactivate
 ```
 
-### Input Files
+## Required Input Files
+1. **Gene Annotation File**
+  - Tab-delimited with the following required columns
+    - *CHROM*: Chromosome number as integer (e.g. 4 instead of chr4)
+    - *GeneStart*: Start coordinate of the gene. These must match the build of VCF file and eQTL summary statistics.
+    - *GeneEnd*: End coordinate of the gene. These must match the build of VCF file and eQTL summary statistics.
+    - *TargetID*: Gene identifier (e.g., Ensembl gene ID)
+1. **eQTL Summary Statistics File**
+  - Tab-delimited (one file per parent ancestry) with the following required columns
+    - *CHROM*: Chromosome number as integer (e.g. 4 instead of chr4)
+    - *POS*: Genomic position of the variant (base pair coordinate). These must match the build of VCF file and annotation file.
+    - *A1*: Effect allele
+    - *A2*: Non-effect (reference) allele
+    - *Beta*: Estimated effect size of allele A1 on gene expression relative to A2
+    - *P*: p-value of eQTL association
+    - *TargetID*: Gene identifier
+    - *N*: Sample size used for estimating the association
 
-### Example Code
+## Example Code
 
 ```bash
 module load R
