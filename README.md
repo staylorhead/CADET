@@ -130,7 +130,7 @@ python3 ${DIR}/training.py \
 --sst_file=${EQTL_SS_ANC0} \ # eQTL summary statistic file of ancestry 0
 --lassosum_LD_block="AFR.hg38" \ # lassosum LD block: one of "EUR.hg19", "AFR.hg19", "ASN.hg19", "EUR.hg38", "AFR.hg38", "ASN.hg38"
 --r2=0.99 \ # LD-clumping threshold 
---window=1000000 \ # Window size around gene
+--window=1000000 \ # Variant window size around gene
 --models=PT,lassosum \ # PRS models to train for imputing gene expression
 --pt=0.001,0.05 \ # P-value threshold if training P+T clumping and thresholding models
 --thread=1 \ # Number of threads
@@ -162,8 +162,8 @@ python3 ${DIR}/training.py \
 
 Rscript ${DIR}/imputing.R \
 --chrom=4 \ # Chromsome 
---anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \ # Path to directory of ancestry 0 GReX weights
---anc1_models_dir=${DIR}/Example/Output/Anc1_grex_models \ # Path to directory of ancestry 1 GReX weights
+--anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \ # Path to directory of ancestry 0 GReX weights created in (1)
+--anc1_models_dir=${DIR}/Example/Output/Anc1_grex_models \ # Path to directory of ancestry 1 GReX weights created in (2)
 --models=PT,lassosum \
 --pt=0.001,0.05 \
 --vcf_file=${VCF} \
@@ -180,13 +180,13 @@ Rscript ${DIR}/imputing.R \
 for pheno_num in 1 2; do
   Rscript ${DIR}/twas.R \
     --chrom=4 \
-    --pheno_num=${pheno_num} \
+    --pheno_num=${pheno_num} \ # Phenotype number: 1,...,K for K total phenotypes included in phenotype file
     --models=PT,lassosum \
     --pt=0.001,0.05 \
     --pheno_file=${PHENO} \
-    --grex_dir=${DIR}/Example/Output/Imputed_grex \
+    --grex_dir=${DIR}/Example/Output/Imputed_grex \ # Path to directory of imputed GReX files created in (3)
     --anno_file=${ANNO} \
-    --out_dir=${DIR}/Example/Output/TWAS
+    --out_dir=${DIR}/Example/Output/TWAS # Path to output directory
 done
 ```
 ## Output Files
