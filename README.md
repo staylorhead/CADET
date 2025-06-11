@@ -43,7 +43,7 @@ CADET depends opon successful prior installation of:
     - [numpy 1.21.5](https://numpy.org)
     - [pysam 0.19.1](https://pysam.readthedocs.io/en/latest/api.html) 
 
-Here is some example code to create an Python environment for CADET:
+Here is some example code to create a Python environment for CADET:
 
 ```bash
 # create environment 
@@ -68,7 +68,7 @@ conda deactivate
     - *GeneStart*: Start coordinate of the gene. These must match the build of VCF file and eQTL summary statistics.
     - *GeneEnd*: End coordinate of the gene. These must match the build of VCF file and eQTL summary statistics.
     - *TargetID*: Gene identifier (e.g., Ensembl gene ID)
-1. **eQTL Summary Statistics File**
+2. **eQTL Summary Statistic Files (2)**
   - Tab-delimited (one file per parent ancestry) with the following required columns
     - *CHROM*: Chromosome number as integer (e.g. 4 instead of chr4)
     - *POS*: Genomic position of the variant (base pair coordinate). These must match the build of VCF file and annotation file.
@@ -78,7 +78,24 @@ conda deactivate
     - *P*: p-value of eQTL association
     - *TargetID*: Gene identifier
     - *N*: Sample size used for estimating the association
-
+3. **Phased VCF File of Target Adixed Genomes with LA Information**
+    - VCF file with phased, admixed target genotypes and the estimated local ancestry for each allele. This file should follow the format of [FLARE](https://github.com/browning-lab/flare?tab=readme-ov-file#output-files) output VCF files. The two parent ancestries should be coded using integers 0/1. This notation will be assumed across all CADET scripts.
+    - The ID field for each variant should take the pattern: chr_pos_ref_alt.
+    - The build of this VCF file should again match that of the gene annotation file and eQTL summary statistics.
+    
+| #CHROM | POS | ID       | REF | ALT | ... | FORMAT     | SAMP1     |
+|-------|-----|----------|-----|-----|-----|-------------|-----------|
+| 4     | 1   | 4_1_T_C  | T   | C   | ... | GT:AN1:AN2  | 0&#124;0:0:1  |
+4. **Allele Frequency Files (2)**
+  - Tab-delimited (one file per parent ancestry) with the following required columns
+    - *ID*: Variant ID in the pattern: chr_pos_ref_alt
+    - *MAF*: Allele frequency of the alternative allele in a given parent ancestry (0 or 1)
+4. **Phenotype File of Target Admixed Samples**
+  - Tab-delimited with K+1 required columns, where K is the number of phenotypes you are testing in the TWAS
+    - *SampID*: Sample IDs matching those included in the VCF file
+    - *Phen1*: Phenotype values. These may be numeric or binary. If it is a binary trait, these must be stored as 0/1 integer values.
+  - Include further columns for additional phenotypes making sure that each column name is unique.
+   
 ## Example Code
 
 ```bash
