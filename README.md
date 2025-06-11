@@ -131,7 +131,7 @@ python3 ${DIR}/training.py \
 --lassosum_LD_block="AFR.hg38" \ # lassosum LD block: one of "EUR.hg19", "AFR.hg19", "ASN.hg19", "EUR.hg38", "AFR.hg38", "ASN.hg38"
 --r2=0.99 \ # LD-clumping threshold 
 --window=1000000 \ # Window size around gene
---models=PT,lassosum \ # PRS models to train for impute gene expression
+--models=PT,lassosum \ # PRS models to train for imputing gene expression
 --pt=0.001,0.05 \ # P-value threshold if training P+T clumping and thresholding models
 --thread=1 \ # Number of threads
 --script_dir=${DIR} \ # Path to CADET source directory
@@ -161,16 +161,16 @@ python3 ${DIR}/training.py \
 ################################################################
 
 Rscript ${DIR}/imputing.R \
---chrom=4 \
---anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \
---anc1_models_dir=${DIR}/Example/Output/Anc1_grex_models \
+--chrom=4 \ # Chromsome 
+--anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \ # Path to directory of ancestry 0 GReX weights
+--anc1_models_dir=${DIR}/Example/Output/Anc1_grex_models \ # Path to directory of ancestry 1 GReX weights
 --models=PT,lassosum \
 --pt=0.001,0.05 \
 --vcf_file=${VCF} \
 --anno_file=${ANNO} \
 --maf_anc0=${MAF_ANC0} \
 --maf_anc1=${MAF_ANC1} \
---out_dir=${DIR}/Example/Output/Imputed_grex
+--out_dir=${DIR}/Example/Output/Imputed_grex # Path to output directory
 
 ################################################################
 # (4) Perform TWAS and p-value aggregation
