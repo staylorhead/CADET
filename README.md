@@ -70,12 +70,20 @@ module load plink # v1.9
 conda activate cadet
 
 # set the location of the CADET source files
-DIR="/home/user/CADET"
+DIR="/home/sfisch3/CADET"
+VCF="/home/sfisch3/CADET/Example/flare_geno_anc.vcf"
+
+# first create binary files of target vcf
+plink \
+  --vcf ${VCF} \
+  --double-id \
+  --make-bed \
+  --out ${DIR}/Example/Example_geno
 
 # train eQTL weights in one ancestry, e.g., AFR
 python3 ${DIR}/training.py \
 --anno_file=${DIR}/Example/Exp_anno.txt \
---geno_dir=${DIR}/Example/Exp_geno \
+--geno_dir=${DIR}/Example/Example_geno \
 --out_dir=${DIR}/Output/Anc1_grex_models \
 --sst_file=${DIR}/Example/Exp_eQTLSumStatsAnc1.txt \
 --lassosum_LD_block="AFR.hg38" \
@@ -90,7 +98,7 @@ python3 ${DIR}/training.py \
 # train eQTL weights in a second ancestry, e.g., EUR
 python3 ${DIR}/training.py \
 --anno_file=${DIR}/Example/Exp_anno.txt \
---geno_dir=${DIR}/Example/Exp_geno \
+--geno_dir=${DIR}/Example/Example_geno \
 --out_dir=${DIR}/Output/Anc2_grex_models \
 --sst_file=${DIR}/Example/Exp_eQTLSumStatsAnc2.txt \
 --lassosum_LD_block="EUR.hg38" \
