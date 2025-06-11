@@ -15,10 +15,6 @@ CADET leverages local ancestry to capture ancestry-dependent architecture of gen
 2.	Impute GReX (both LA-aware and LA-unaware) for target admixed individuals
 3.	Test gene-phenotype associations via TWAS using the imputed GReX
 
-If you use CADET in your research, please cite the following article:
-
-> Head, S. T., Dai, Q., Schildkraut, J., Cutler, D. J., Yang, J., & Epstein, M. P. (2024). *CADET: Enhanced transcriptome-wide association analyses in admixed samples using eQTL summary data.* bioRxiv. https://doi.org/10.1101/2024.10.21.619441
-
 ## Installation 
 
 First, download all software and example files using:
@@ -90,7 +86,7 @@ conda deactivate
   - Tab-delimited (one file per parent ancestry) with the following required columns
     - *ID*: Variant ID in the pattern: chr_pos_ref_alt
     - *MAF*: Allele frequency of the alternative allele in a given parent ancestry (0 or 1)
-4. **Phenotype File of Target Admixed Samples**
+5. **Phenotype File of Target Admixed Samples**
   - Tab-delimited with K+1 required columns, where K is the number of phenotypes you are testing in the TWAS
     - *SampID*: Sample IDs matching those included in the VCF file
     - *Phen1*: Phenotype values. These may be numeric or binary. If it is a binary trait, these must be stored as 0/1 integer values.
@@ -182,3 +178,16 @@ for pheno_num in 1 2; do
     --out_dir=${DIR}/Example/Output/TWAS
 done
 ```
+## Output Files
+
+## Citation
+
+If you use CADET in your research, please cite the following article:
+
+> Head, S. T., Dai, Q., Schildkraut, J., Cutler, D. J., Yang, J., & Epstein, M. P. (2024). *CADET: Enhanced transcriptome-wide association analyses in admixed samples using eQTL summary data.* bioRxiv. https://doi.org/10.1101/2024.10.21.619441
+
+CADET code also depends on the [OTTERS](https://github.com/daiqile96/OTTERS) framework, and we gratefully acknowledge these authors' contribution. 
+
+## Contact
+
+For questions or issues related to this software, please contact Taylor Head (sthead@mdanderson.org).
