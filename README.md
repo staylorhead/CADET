@@ -77,7 +77,7 @@ DIR="/home/sfisch3/CADET"
 # set the location of user input files
 VCF="/home/sfisch3/CADET/Example/flare_geno_anc.vcf"
 PHENO="/home/sfisch3/CADET/Example/twas_phenotypes.txt"
-ANNO="/home/sfisch3/CADET/Example/anno.tx"
+ANNO="/home/sfisch3/CADET/Example/anno.txt"
 EQTL_SS_ANC0="${DIR}/Example/eQTLSumStatsAnc0.txt"
 EQTL_SS_ANC1="${DIR}/Example/eQTLSumStatsAnc1.txt"
 MAF_ANC0=${DIR}/Example/mafAnc0.txt
@@ -123,7 +123,7 @@ python3 ${DIR}/training.py \
 
 # impute GReX for genes on a single chromosome
 # can loop over all 22 autosomes
-Rscript imputing.R \
+Rscript ${DIR}/imputing.R \
 --chrom=4 \
 --anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \
 --anc1_models_dir=${DIR}/Example/Output/Anc1_grex_models \
@@ -133,17 +133,19 @@ Rscript imputing.R \
 --anno_file=${ANNO} \
 --maf_anc0=${MAF_ANC0} \
 --maf_anc1=${MAF_ANC1} \
---out_dir=${DIR}/Output/Imputed_grex
+--out_dir=${DIR}/Example/Output/Imputed_grex
 
 # perform TWAS
-# can loop over all 22 autosomes and all phenotypes
-Rscript twas.R \
---chrom=4 \
---pheno_num=1 \
---models=PT,lassosum \
---pt=0.001,0.05 \
---pheno_file=${PHENO} \
---grex_dir=${DIR}/Example/Output/Imputed_grex \
---anno_file=${ANNO} \
---out_dir=${DIR}/Output/TWAS
+# can loop over all 22 autosomes and all phenotypes, e.g.:
+for pheno_num in 1 2; do
+  Rscript ${DIR}/twas.R \
+    --chrom=4 \
+    --pheno_num=${pheno_num} \
+    --models=PT,lassosum \
+    --pt=0.001,0.05 \
+    --pheno_file=${PHENO} \
+    --grex_dir=${DIR}/Example/Output/Imputed_grex \
+    --anno_file=${ANNO} \
+    --out_dir=${DIR}/Example/Output/TWAS
+done
 ```
