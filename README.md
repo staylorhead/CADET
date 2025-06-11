@@ -110,4 +110,18 @@ python3 ${DIR}/training.py \
 --thread=1 \
 --script_dir=${DIR} \
 --seed=123
+
+# impute GReX in a single chromosome
+# can loop over all 22 autosomes
+Rscript imputing.R \
+--chrom==4 \
+--anc0_models_dir==${DIR}/Output/An01_grex_models \
+--anc1_models_dir==${DIR}/Output/Anc1_grex_models \
+--models==PT,lassosum \
+--pt==0.001,0.05 \
+--vcf_file==${VCF} \
+--anno_file==${DIR}/Example/Exp_anno.txt \
+--maf_anc0==${DIR}/Example/mafAnc0.txt \
+--maf_an1==${DIR}/Example/mafAnc1.txt \
+--out_dir==${DIR}/Output/Imputed_grex
 ```
