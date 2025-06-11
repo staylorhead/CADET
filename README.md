@@ -32,6 +32,7 @@ CADET depends opon successful prior installation of:
 - [R](https://www.r-project.org/) and the following packages
     - [lassosum](https://github.com/tshmak/lassosum)
     - [fdrtool](https://cran.r-project.org/web/packages/fdrtool/index.html)
+    - [data.table](https://cran.r-project.org/web/packages/data.table/index.html)
 - [BGZIP](http://www.htslib.org/doc/bgzip.html)
 - [TABIX](http://www.htslib.org/doc/tabix.html)
 - [PLINK 1.9](https://www.cog-genomics.org/plink/)
