@@ -189,7 +189,6 @@ for pheno_num in 1 2; do
     --out_dir=${DIR}/Example/Output/TWAS # Path to output directory
 done
 ```
-## Output Files
 
 ## Citation
 
