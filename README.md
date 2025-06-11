@@ -71,9 +71,17 @@ module load tabix
 module load plink # v1.9
 conda activate cadet
 
-# set the location of the CADET source files
+# set the location of the CADET source directory
 DIR="/home/sfisch3/CADET"
+
+# set the location of user input files
 VCF="/home/sfisch3/CADET/Example/flare_geno_anc.vcf"
+PHENO="/home/sfisch3/CADET/Example/twas_phenotypes.txt"
+ANNO="/home/sfisch3/CADET/Example/anno.tx"
+EQTL_SS_ANC0="${DIR}/Example/eQTLSumStatsAnc0.txt"
+EQTL_SS_ANC1="${DIR}/Example/eQTLSumStatsAnc1.txt"
+MAF_ANC0=${DIR}/Example/mafAnc0.txt
+MAF_ANC1=${DIR}/Example/mafAnc1.txt
 
 # first create binary files of target vcf
 plink \
@@ -85,10 +93,10 @@ plink \
 
 # train eQTL weights in ancestry 0, e.g., AFR
 python3 ${DIR}/training.py \
---anno_file=${DIR}/Example/anno.txt \
+--anno_file=${ANNO} \
 --geno_dir=${DIR}/Example/geno \
---out_dir=${DIR}/Output/Anc0_grex_models \
---sst_file=${DIR}/Example/eQTLSumStatsAnc0.txt \
+--out_dir=${DIR}/Example/Output/Anc0_grex_models \
+--sst_file=${EQTL_SS_ANC0} \
 --lassosum_LD_block="AFR.hg38" \
 --r2=0.99 \
 --window=1000000 \
@@ -100,10 +108,10 @@ python3 ${DIR}/training.py \
 
 # train eQTL weights in ancestry 1, e.g., EUR
 python3 ${DIR}/training.py \
---anno_file=${DIR}/Example/anno.txt \
+--anno_file=${ANNO} \
 --geno_dir=${DIR}/Example/geno \
---out_dir=${DIR}/Output/Anc1_grex_models \
---sst_file=${DIR}/Example/eQTLSumStatsAnc1.txt \
+--out_dir=${DIR}/Example/Output/Anc1_grex_models \
+--sst_file=${EQTL_SS_ANC1} \
 --lassosum_LD_block="EUR.hg38" \
 --r2=0.99 \
 --window=1000000 \
@@ -117,13 +125,25 @@ python3 ${DIR}/training.py \
 # can loop over all 22 autosomes
 Rscript imputing.R \
 --chrom=4 \
---anc0_models_dir=${DIR}/Output/Anc0_grex_models \
---anc1_models_dir=${DIR}/Output/Anc1_grex_models \
+--anc0_models_dir=${DIR}/Example/Output/Anc0_grex_models \
+--anc1_models_dir=${DIR}/Example/Output/Anc1_grex_models \
 --models=PT,lassosum \
 --pt=0.001,0.05 \
 --vcf_file=${VCF} \
---anno_file=${DIR}/Example/anno.txt \
---maf_anc0=${DIR}/Example/mafAnc0.txt \
---maf_anc1=${DIR}/Example/mafAnc1.txt \
+--anno_file=${ANNO} \
+--maf_anc0=${MAF_ANC0} \
+--maf_anc1=${MAF_ANC1} \
 --out_dir=${DIR}/Output/Imputed_grex
+
+# perform TWAS
+# can loop over all 22 autosomes and all phenotypes
+Rscript twas.R \
+--chrom=4 \
+--pheno_num=1 \
+--models=PT,lassosum \
+--pt=0.001,0.05 \
+--pheno_file=${PHENO} \
+--grex_dir=${DIR}/Example/Output/Imputed_grex \
+--anno_file=${ANNO} \
+--out_dir=${DIR}/Output/TWAS
 ```
