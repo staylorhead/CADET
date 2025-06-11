@@ -80,14 +80,14 @@ plink \
   --double-id \
   --make-bed \
   --keep-allele-order \
-  --out ${DIR}/Example/Example_geno
+  --out ${DIR}/Example/geno
 
 # train eQTL weights in ancestry 0, e.g., AFR
 python3 ${DIR}/training.py \
---anno_file=${DIR}/Example/Exp_anno.txt \
---geno_dir=${DIR}/Example/Example_geno \
+--anno_file=${DIR}/Example/anno.txt \
+--geno_dir=${DIR}/Example/geno \
 --out_dir=${DIR}/Output/Anc0_grex_models \
---sst_file=${DIR}/Example/Exp_eQTLSumStatsAnc0.txt \
+--sst_file=${DIR}/Example/eQTLSumStatsAnc0.txt \
 --lassosum_LD_block="AFR.hg38" \
 --r2=0.99 \
 --window=1000000 \
@@ -99,10 +99,10 @@ python3 ${DIR}/training.py \
 
 # train eQTL weights in ancestry 1, e.g., EUR
 python3 ${DIR}/training.py \
---anno_file=${DIR}/Example/Exp_anno.txt \
---geno_dir=${DIR}/Example/Example_geno \
+--anno_file=${DIR}/Example/anno.txt \
+--geno_dir=${DIR}/Example/geno \
 --out_dir=${DIR}/Output/Anc1_grex_models \
---sst_file=${DIR}/Example/Exp_eQTLSumStatsAnc1.txt \
+--sst_file=${DIR}/Example/eQTLSumStatsAnc1.txt \
 --lassosum_LD_block="EUR.hg38" \
 --r2=0.99 \
 --window=1000000 \
@@ -121,7 +121,7 @@ Rscript imputing.R \
 --models=PT,lassosum \
 --pt=0.001,0.05 \
 --vcf_file=${VCF} \
---anno_file=${DIR}/Example/Exp_anno.txt \
+--anno_file=${DIR}/Example/anno.txt \
 --maf_anc0=${DIR}/Example/mafAnc0.txt \
 --maf_anc1=${DIR}/Example/mafAnc1.txt \
 --out_dir=${DIR}/Output/Imputed_grex
